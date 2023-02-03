@@ -1,5 +1,18 @@
-const wrapper = document.querySelectorAll('.wrapper');
-// const
+for (let i = 0; i < 5; i++) {
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('wrapper');
+
+    const text = document.createElement('p');
+    text.classList.add('text');
+
+    const icon = document.createElement('i');
+    icon.classList.add('fa-solid', 'fa-lock-open');
+
+    wrapper.append(text);
+    wrapper.append(icon);
+
+    document.body.append(wrapper);
+}
 
 function randomColor() {
     const hexaDecimal = '0123456789abcdef';
@@ -12,7 +25,7 @@ function randomColor() {
     return color;
 }
 
-function setColor() {
+function setColor(wrapper) {
     wrapper.forEach(item => {
         const generator = randomColor();
         const text = item.querySelector('p');
@@ -22,4 +35,8 @@ function setColor() {
     });
 }
 
-setColor();
+document.addEventListener('DOMContentLoaded', () => {
+    const wrapper = document.querySelectorAll('.wrapper');
+    setColor(wrapper);
+});
+
