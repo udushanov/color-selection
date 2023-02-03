@@ -1,4 +1,5 @@
 const wrapper = document.querySelectorAll('.wrapper');
+// const
 
 function randomColor() {
     const hexaDecimal = '0123456789abcdef';
@@ -12,7 +13,13 @@ function randomColor() {
 }
 
 function setColor() {
-    wrapper.forEach(item => item.style.backgroundColor = randomColor());
+    wrapper.forEach(item => {
+        const generator = randomColor();
+        const text = item.querySelector('p');
+        text.textContent = generator;
+        item.style.backgroundColor = generator;
+
+    });
 }
 
 setColor();
