@@ -35,15 +35,27 @@ function render() {
     }
 }
 
-function setColor(wrapper) {
-    wrapper.forEach(item => {
-        const generator = randomColor();
+function setColor(wrapper, isInitial) {
+
+    const colors = isInitial ? getColorsFromHash() : [];
+
+    wrapper.forEach((item, i) => {
+        const generator = isInitial ?
+            colors[i]
+                ? colors[i]
+                : randomColor()
+            : randomColor();
         const brightness = getContrastYIQ(generator);
         const text = item.querySelector('p');
         const icon = item.querySelector('i');
 
         if (item.dataset.status === 'locked') {
+            colors.push(text.textContent);
             return
+        }
+
+        if (!isInitial) {
+            colors.push(generator);
         }
 
         text.style.color = brightness;
@@ -51,17 +63,31 @@ function setColor(wrapper) {
         text.textContent = generator;
         item.style.backgroundColor = generator;
     });
+
+    console.log(colors)
+    createColorHash(colors);
+}
+
+function createColorHash(colors = []) {
+    document.location.hash = colors.map(color => color.substring(1)).join('-');
+}
+
+function getColorsFromHash() {
+    if (document.location.hash.length > 1) {
+        return document.location.hash.substring(1).split('-').map(color => '#' + color);
+    }
+    return [];
 }
 
 render();
 
 document.addEventListener('DOMContentLoaded', () => {
     const wrapper = document.querySelectorAll('.wrapper');
-    setColor(wrapper);
+    setColor(wrapper, true);
 
     document.addEventListener('keydown', (event) => {
         if (event.code === 'Space') {
-            setColor(wrapper);
+            setColor(wrapper, false);
         }
     });
 });
@@ -80,7 +106,7 @@ document.addEventListener('click', (event) => {
         // console.log(event.target.textContent);
         navigator.clipboard.writeText(event.target.textContent);
     }
-})
+});
 
 
 
