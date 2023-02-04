@@ -9,10 +9,10 @@ function randomColor() {
     return color;
 }
 
-function getContrastYIQ(hexcolor) {
-    const r = parseInt(hexcolor.substring(1, 3), 16);
-    const g = parseInt(hexcolor.substring(3, 5), 16);
-    const b = parseInt(hexcolor.substring(5, 7), 16);
+function getContrastYIQ(hexColor) {
+    const r = parseInt(hexColor.substring(1, 3), 16);
+    const g = parseInt(hexColor.substring(3, 5), 16);
+    const b = parseInt(hexColor.substring(5, 7), 16);
     const yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
     return (yiq >= 128) ? 'black' : 'white';
 }
@@ -36,7 +36,6 @@ function render() {
 }
 
 function setColor(wrapper, isInitial) {
-
     const colors = isInitial ? getColorsFromHash() : [];
 
     wrapper.forEach((item, i) => {
@@ -64,7 +63,6 @@ function setColor(wrapper, isInitial) {
         item.style.backgroundColor = generator;
     });
 
-    console.log(colors)
     createColorHash(colors);
 }
 
@@ -103,7 +101,6 @@ document.addEventListener('click', (event) => {
         target.classList.add('fa-solid', 'fa-lock-open');
         target.parentElement.dataset.status = '';
     } else if (target.classList.value === 'text') {
-        // console.log(event.target.textContent);
         navigator.clipboard.writeText(event.target.textContent);
     }
 });
